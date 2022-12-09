@@ -130,9 +130,9 @@ while run != False:
                         run = False
                         exit()
                     else:
-                        turn_arr.append(turnX)    # append inputted values to first array which is reset each time the for loop is looped (10 times), so user has 10 coordinates to input
+                        turn_arr.append(turnX)    # append inputted values to first array which is reset each time the for loop, so user has selected amount of coordinates to input
                         turn_arr.append(turnY)
-                        goal_arr.append(turn_arr) # append each X,Y array into larger goal array containing 10 turning points and the goal
+                        goal_arr.append(turn_arr) # append each X,Y array into larger goal array containing turning points and the goal
             
             goal_arr.append(goal) # append goal point into array
 
