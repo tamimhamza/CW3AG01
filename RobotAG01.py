@@ -113,7 +113,7 @@ while run != False:
             # moving vehicle on path using checkpoint
             goal_arr = []  # create array with points free of obstacle
             
-            while run != False
+            if run != False
                 turnN = int(input('Input number of checkpoints'))
 
             for i in range(turnN):
