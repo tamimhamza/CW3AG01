@@ -43,13 +43,13 @@ plt.show()
 # Input for starting coordinates with value range check
 X = int(input('Input starting X coordinate'))     # Checks if values are in range if they are run continues to equal True so code runs
 if X > 50 or X < -50:                             # If not code stops running
-    print('Value ouside of mape range')
+    print('Value outside of mape range')
     run = False
 
 while run != False:
     Y = int(input('Input starting Y coordinate'))
     if Y > 50 or Y < -50:
-        print('Value ouside of mape range')
+        print('Value outside of mape range')
         run = False
 
     while run != False:
@@ -68,12 +68,12 @@ while run != False:
 
         X_ = int(input('Input goal X cooordinate'))  # input for goal coordinates with range checker that runs code if allowed and stop code if false
         if X_ > 50 or X_ <-50:
-            print('Value ouside of mape range')
+            print('Value outside of mape range')
             run = False
         while run != False:
             Y_ = int(input('Input goal Y coordinate'))
             if Y_ > 50 or Y_ < -50:
-                print('Value ouside of mape range')
+                print('Value outside of mape range')
                 run = False
 
             goal = [X_, Y_];  # marker cooridinates  # assign variables to array
@@ -119,13 +119,13 @@ while run != False:
                 turn_arr = [] # create array to assign single turning point coordinates in before being appended
                 turnX = int(input('Input checkpoint X coordinate')) # input coordinates with value checker that will either end or continue code
                 if turnX > 50 or turnX < -50:
-                    print('Value ouside of map range')
+                    print('Value outside of map range')
                     run = False
                     exit()
                 else:
                     turnY = int(input('Input checkpoint Y coordinate'))
                     if turnY > 50 or turnY < -50:
-                        print('Value ouside of mape range')
+                        print('Value outside of mape range')
                         run = False
                         exit()
                     else:
