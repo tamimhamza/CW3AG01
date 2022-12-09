@@ -1,4 +1,4 @@
-from roboticstoolbox import DXform, Bicycle, RandomPath, VehicleIcon, RangeBearingSensor, LandmarkMap
+from roboticstoolbox import DXform, Bicycle, RandomPath, VehicleIcon, RangeBearingSensor, LandmarkMap # initialise all packages
 
 from math import pi, atan2
 
@@ -14,8 +14,9 @@ anim = VehicleIcon('robot', scale=5)  # give robot image
 
 run = True
 
+# view map first before inputs so user can get path, goal, starting coordinates
 map = LandmarkMap(50, 50)  # set grid size
-map.plot()  # view map on plot
+map.plot()  # plot obstacles
 
 rectangle_1 = plt.Rectangle((-50, 47), 100, 3, fc='black', ec='black')
 plt.gca().add_patch(rectangle_1)
@@ -38,8 +39,10 @@ plt.gca().add_patch(rectangle_9)
 
 plt.show()
 
-X = int(input('Input starting X coordinate'))
-if X > 50 or X < -50:
+
+# Input for starting coordinates with value range check
+X = int(input('Input starting X coordinate'))     # Checks if values are in range if they are run continues to equal True so code runs
+if X > 50 or X < -50:                             # If not code stops running
     print('Value ouside of mape range')
     run = False
 
@@ -50,7 +53,7 @@ while run != False:
         run = False
 
     while run != False:
-        initial_pos = [X, Y, 1.5]
+        initial_pos = [X, Y, 1.5]                 # Add coordinates to array
 
         veh = Bicycle(  # assign vehicle type
             animation=anim,
@@ -63,7 +66,7 @@ while run != False:
 
         # create target point and illustrate it
 
-        X_ = int(input('Input goal X cooordinate'))
+        X_ = int(input('Input goal X cooordinate'))  # input for goal coordinates with range checker that runs code if allowed and stop code if false
         if X_ > 50 or X_ <-50:
             print('Value ouside of mape range')
             run = False
@@ -73,17 +76,18 @@ while run != False:
                 print('Value ouside of mape range')
                 run = False
 
-            goal = [X_, Y_];  # marker cooridinates
-            goal_marker_style = {
+            goal = [X_, Y_];  # marker cooridinates  # assign variables to array
+            goal_marker_style = {                 # designing goal marker
                 'marker': 'o',  # marker style
                 'markersize': 8,  # size
                 'color': 'b',  # colour
             }
-            plt.plot(goal[0], goal[1], **goal_marker_style)
+            plt.plot(goal[0], goal[1], **goal_marker_style) # plot goal marker
 
             map = LandmarkMap(50, 50)  # set grid size
-            map.plot()  # view map on plot
-
+            map.plot()  # plot obstacles
+            
+            # plot maze design
             rectangle_1 = plt.Rectangle((-50, 47), 100, 3, fc='black', ec='black')
             plt.gca().add_patch(rectangle_1)
             rectangle_2 = plt.Rectangle((-50, -50), 3, 100, fc='black', ec='black')
@@ -110,8 +114,8 @@ while run != False:
             goal_arr = []  # create array with points free of obstacle
             
             for i in range(10):
-                turn_arr = []
-                turnX = int(input('Input checkpoint X coordinate'))
+                turn_arr = [] # create array to assign single turning point coordinates in before being appended
+                turnX = int(input('Input checkpoint X coordinate')) # input coordinates with value checker that will either end or continue code
                 if turnX > 50 or turnX < -50:
                     print('Value ouside of map range')
                     run = False
@@ -123,44 +127,44 @@ while run != False:
                         run = False
                         exit()
                     else:
-                        turn_arr.append(turnX)
+                        turn_arr.append(turnX)    # append inputted values to first array which is reset each time the for loop is looped (10 times), so user has 10 coordinates to input
                         turn_arr.append(turnY)
-                        goal_arr.append(turn_arr)
+                        goal_arr.append(turn_arr) # append each X,Y array into larger goal array containing 10 turning points and the goal
             
-            goal_arr.append(goal)
+            goal_arr.append(goal) # append goal point into array
 
             target = goal_arr
             goal_arr.insert(0, initial_pos)
 
             x_arr = [item[0] for item in goal_arr]  # split X & Y into diff arrays
-            y_arr = [item[1] for item in goal_arr]
+            y_arr = [item[1] for item in goal_arr]  
 
             if run != False:
                 for n in range(len(goal_arr)-1):
                     run = True
                     target = [x_arr[n+1], y_arr[n+1]]
-                    while (run):  # continues to operate if False loop ends and goes back to check
-                        goal_heading = atan2(  # for next point and repeat...
+                    while (run):  # continues to operate if False loop ends and goes back to check for next point and repeat...
+                        goal_heading = atan2( 
                         target[1] - veh.x[1],
                         target[0] - veh.x[0]
                             )
 
                         for i in sensor.h(veh.x):
-                            if (i[0] < 3):           #checks for obstacle if true move to side and continue
+                            if (i[0] < 3):           # checks for obstacle if true move 90 degrees and continue
                                 if(abs(i[1]) < pi/4):
                                     run = True
                                     veh.step(4,0.5)
                             else: 
                                 run = True 
 
-                        steer = goal_heading-veh.x[2] #sets robot on set path to free points listed in array
+                        steer = goal_heading-veh.x[2] # sets robot on set path to check/turning points inputted by user in beggining
                         if steer>pi:
-                            steer = steer-2*pi
+                            steer = steer-2*pi 
                         veh.step(4,steer)  
                         if( (abs(target[0]-veh.x[0]) >0.3) or (abs(target[1] -veh.x[1]) >0.3) ):
                             run=True
                         else:
-                            run=False                #stops loop when robot reaches destination
+                            run=False                # stops loop when robot reaches destination
                         veh._animation.update(veh.x)
                         plt.pause(0.0005)
                 plt.pause(1000)
