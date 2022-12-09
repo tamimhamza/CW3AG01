@@ -113,7 +113,9 @@ while run != False:
             # moving vehicle on path using checkpoint
             goal_arr = []  # create array with points free of obstacle
             
-            for i in range(10):
+            turnN = int(input('Input number of checkpoints'))
+
+            for i in range(turnN):
                 turn_arr = [] # create array to assign single turning point coordinates in before being appended
                 turnX = int(input('Input checkpoint X coordinate')) # input coordinates with value checker that will either end or continue code
                 if turnX > 50 or turnX < -50:
